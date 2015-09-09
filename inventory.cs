@@ -21,7 +21,7 @@ namespace cClass
                 p.TPlayer.inventory[currentLoop].SetDefaults(0);
                 NetMessage.SendData(5, -1, -1, "", p.Index, (float)currentLoop, 0f, 0f, 0);
                 currentLoop++;
-            } 
+            }
         }
 
         public static bool saveEquipment(int index, string classe)
@@ -48,7 +48,7 @@ namespace cClass
                         int currentLoop = 0;
                         foreach (Item i in p.TPlayer.armor)
                         {
-                            vars.warrior[index].itemsArmorName.Add(i.name);
+
                             vars.warrior[index].itemsArmorNetID.Add(i.netID);
                             vars.warrior[index].itemsArmorPrefix.Add(i.prefix);
                             vars.warrior[index].itemsArmorStack.Add(i.stack);
@@ -73,7 +73,8 @@ namespace cClass
                         int currentLoop = 0;
                         foreach (Item i in p.TPlayer.armor)
                         {
-                            vars.paladin[index].itemsArmorName.Add(i.name);
+
+
                             vars.paladin[index].itemsArmorNetID.Add(i.netID);
                             vars.paladin[index].itemsArmorPrefix.Add(i.prefix);
                             vars.paladin[index].itemsArmorStack.Add(i.stack);
@@ -98,7 +99,6 @@ namespace cClass
                         int currentLoop = 0;
                         foreach (Item i in p.TPlayer.armor)
                         {
-                            vars.wizard[index].itemsArmorName.Add(i.name);
                             vars.wizard[index].itemsArmorNetID.Add(i.netID);
                             vars.wizard[index].itemsArmorPrefix.Add(i.prefix);
                             vars.wizard[index].itemsArmorStack.Add(i.stack);
@@ -368,7 +368,6 @@ namespace cClass
 
                                 p.TPlayer.armor[currentLoop].netDefaults(i);
                                 p.TPlayer.armor[currentLoop].stack = vars.warrior[index].itemsArmorStack[currentLoop];
-                                p.TPlayer.armor[currentLoop].name = vars.warrior[index].itemsArmorName[currentLoop];
                                 NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59, (float)vars.warrior[index].itemsArmorPrefix[currentLoop], 0f, 0);
                                 currentLoop++;
                             }
@@ -401,11 +400,8 @@ namespace cClass
                         {
                             foreach (int i in vars.paladin[index].itemsArmorNetID)
                             {
-
-
                                 p.TPlayer.armor[currentLoop].netDefaults(i);
                                 p.TPlayer.armor[currentLoop].stack = vars.paladin[index].itemsArmorStack[currentLoop];
-                                p.TPlayer.armor[currentLoop].name = vars.paladin[index].itemsArmorName[currentLoop];
                                 NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59, (float)vars.paladin[index].itemsArmorPrefix[currentLoop], 0f, 0);
                                 currentLoop++;
                             }
@@ -438,11 +434,10 @@ namespace cClass
                         {
                             foreach (int i in vars.wizard[index].itemsArmorNetID)
                             {
-
                                 p.TPlayer.armor[currentLoop].netDefaults(i);
                                 p.TPlayer.armor[currentLoop].stack = vars.wizard[index].itemsArmorStack[currentLoop];
-                                p.TPlayer.armor[currentLoop].name = vars.wizard[index].itemsArmorName[currentLoop];
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59, (float)vars.wizard[index].itemsArmorPrefix[currentLoop], 0f, 0);
+                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)(currentLoop + 59), (float)vars.wizard[index].itemsArmorPrefix[currentLoop], 0f, 0);
+                                
                                 currentLoop++;
                             }
                         }
@@ -473,4 +468,3 @@ namespace cClass
         }
     }
 }
-
