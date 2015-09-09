@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +28,6 @@ namespace cClass
             public List<int> itemsArmorNetID = new List<int>();
             public List<int> itemsArmorPrefix = new List<int>();
             public List<int> itemsArmorStack = new List<int>();
-            public List<string> itemsArmorName = new List<string>();
 
             public int level = 1;
             public int exprience = 0;
@@ -53,7 +52,6 @@ namespace cClass
             public List<int> itemsArmorNetID = new List<int>();
             public List<int> itemsArmorPrefix = new List<int>();
             public List<int> itemsArmorStack = new List<int>();
-            public List<string> itemsArmorName = new List<string>();
 
             public int level = 1;
             public int exprience = 0;
@@ -78,7 +76,6 @@ namespace cClass
             public List<int> itemsArmorNetID = new List<int>();
             public List<int> itemsArmorPrefix = new List<int>();
             public List<int> itemsArmorStack = new List<int>();
-            public List<string> itemsArmorName = new List<string>();
 
             public int level = 1;
             public int exprience = 0;
