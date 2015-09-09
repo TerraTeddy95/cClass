@@ -21,7 +21,7 @@ namespace cClass
                 p.TPlayer.inventory[currentLoop].SetDefaults(0);
                 NetMessage.SendData(5, -1, -1, "", p.Index, (float)currentLoop, 0f, 0f, 0);
                 currentLoop++;
-            }
+            } 
         }
 
         public static bool saveEquipment(int index, string classe)
