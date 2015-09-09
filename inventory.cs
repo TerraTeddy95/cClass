@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -365,8 +365,7 @@ namespace cClass
                         {
                             foreach (int i in vars.warrior[index].itemsArmorNetID)
                             {
-                                p.TPlayer.armor[currentLoop].netDefaults(0);
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59);
+
                                 p.TPlayer.armor[currentLoop].netDefaults(i);
                                 p.TPlayer.armor[currentLoop].stack = vars.warrior[index].itemsArmorStack[currentLoop];
                                 p.TPlayer.armor[currentLoop].name = vars.warrior[index].itemsArmorName[currentLoop];
@@ -402,8 +401,8 @@ namespace cClass
                         {
                             foreach (int i in vars.paladin[index].itemsArmorNetID)
                             {
-                                p.TPlayer.armor[currentLoop].netDefaults(0);
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59);
+
+
                                 p.TPlayer.armor[currentLoop].netDefaults(i);
                                 p.TPlayer.armor[currentLoop].stack = vars.paladin[index].itemsArmorStack[currentLoop];
                                 p.TPlayer.armor[currentLoop].name = vars.paladin[index].itemsArmorName[currentLoop];
@@ -439,8 +438,7 @@ namespace cClass
                         {
                             foreach (int i in vars.wizard[index].itemsArmorNetID)
                             {
-                                p.TPlayer.armor[currentLoop].netDefaults(0);
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59);
+
                                 p.TPlayer.armor[currentLoop].netDefaults(i);
                                 p.TPlayer.armor[currentLoop].stack = vars.wizard[index].itemsArmorStack[currentLoop];
                                 p.TPlayer.armor[currentLoop].name = vars.wizard[index].itemsArmorName[currentLoop];
@@ -475,3 +473,4 @@ namespace cClass
         }
     }
 }
+
