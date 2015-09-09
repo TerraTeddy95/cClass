@@ -20,7 +20,7 @@ namespace cClass
 
         public main(Main game) : base(game) { Order -= 1; }
 
-        public override Version Version { get { return new Version("1.0"); } }
+        public override Version Version { get { return new Version("1.1"); } }
         public override string Name { get { return "cClass"; } }
         public override string Author { get { return "Teddy"; } }
         public override string Description { get { return "Classes And Levels"; } }
