@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,111 @@ namespace cClass
 {
     class commands
     {
+        public static void bestWizardsCmd(CommandArgs e)
+        {
+            if (vars.wizard.Count > 4)
+            {
+                var levels = vars.wizard.Select(c => c.level).ToList();
+                var players = vars.wizard.Select(c => c.player).ToList();
+
+                int index;
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    index = levels.IndexOf(levels.Max());
+                    string playerName = players[index];
+                    int levelPlayer = levels[index];
+                    levels.RemoveAt(index);
+                    players.RemoveAt(index);
+                    if (i == 1)
+                    {
+                        e.Player.SendMessage(i + ". " + playerName + " [" + levelPlayer + "]", Color.Red);
+                    }
+                    else
+                    {
+                        e.Player.SendMessage(i + ". " + playerName + " [" + levelPlayer + "]", Color.Silver);
+                    }
+
+                }
+                return;
+            }
+            else
+            {
+                e.Player.SendMessage("[cClass] Place in the ranking must be at least 5 players.", Color.Silver);
+                return;
+            }
+
+        }
+        public static void bestWarriorsCmd(CommandArgs e)
+        {
+            if (vars.warrior.Count > 4)
+            {
+                var levels = vars.warrior.Select(c => c.level).ToList();
+                var players = vars.warrior.Select(c => c.player).ToList();
+
+                int index;
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    index = levels.IndexOf(levels.Max());
+                    string playerName = players[index];
+                    int levelPlayer = levels[index];
+                    levels.RemoveAt(index);
+                    players.RemoveAt(index);
+                    if (i == 1)
+                    {
+                        e.Player.SendMessage(i + ". " + playerName + " [" + levelPlayer + "]", Color.Red);
+                    }
+                    else
+                    {
+                        e.Player.SendMessage(i + ". " + playerName + " [" + levelPlayer + "]", Color.Silver);
+                    }
+
+                }
+                return;
+            }
+            else
+            {
+                e.Player.SendMessage("[cClass] Place in the ranking must be at least 5 players.", Color.Silver);
+                return;
+            }
+
+        }
+        public static void bestPaladinsCmd(CommandArgs e)
+        {
+            if (vars.paladin.Count > 4)
+            {
+                var levels = vars.paladin.Select(c => c.level).ToList();
+                var players = vars.paladin.Select(c => c.player).ToList();
+
+                int index;
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    index = levels.IndexOf(levels.Max());
+                    string playerName = players[index];
+                    int levelPlayer = levels[index];
+                    levels.RemoveAt(index);
+                    players.RemoveAt(index);
+                    if (i == 1)
+                    {
+                        e.Player.SendMessage(i + ". " + playerName + " [" + levelPlayer + "]", Color.Red);
+                    }
+                    else
+                    {
+                        e.Player.SendMessage(i + ". " + playerName + " [" + levelPlayer + "]", Color.Silver);
+                    }
+
+                }
+                return;
+            }
+            else
+            {
+                e.Player.SendMessage("[cClass] Place in the ranking must be at least 5 players.", Color.Silver);
+                return;
+            }
+
+        }
         public static void statCmd(CommandArgs e)
         {
             int index = vars.warrior.FindIndex(w => w.player == e.Player.Name);
@@ -368,7 +473,7 @@ namespace cClass
                 int neededExpForLevelUp = vars.warrior[index].level * (896 + (896 * 43 / 100));
                 int percent = exp * 100 / neededExpForLevelUp;
                 //[1LVL] [2000/4000] - 45%
-                NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "[" + lvl + "LVL] [" + exp + "/" + neededExpForLevelUp + "] " +  percent + "%", (int)c.PackedValue, e.Player.X, e.Player.Y, 0, 0, 0, 0);
+                NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "[" + lvl + "LVL] [" + exp + "/" + neededExpForLevelUp + "] " + percent + "%", (int)c.PackedValue, e.Player.X, e.Player.Y, 0, 0, 0, 0);
                 return;
             }
             if (actualClass == "paladin")
