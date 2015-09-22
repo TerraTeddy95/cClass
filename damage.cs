@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Timers;
 
-namespace cClass
+namespace cClass 
 {
     class damage
     {
