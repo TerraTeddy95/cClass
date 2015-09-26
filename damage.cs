@@ -9,12 +9,13 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Timers;
 
-namespace cClass 
+namespace cClass
 {
     class damage
     {
         public static void onDamage(NpcStrikeEventArgs e)
         {
+
             if (e.Player == null)
             {
                 return;
@@ -169,75 +170,76 @@ namespace cClass
                     e.Damage = e.Damage + damage;
                     return;
                 }
+            
+            }
+            if (sender.SelectedItem.ranged)
+            {
 
-                if (sender.SelectedItem.ranged)
+                if (vars.informations[index].actualClass == "warrior")
                 {
-
-                    if (vars.informations[index].actualClass == "warrior")
+                    int damage = (vars.warrior[index].statRangedDamage);
+                    if (damage > 0)
                     {
-                        int damage = (vars.warrior[index].statRangedDamage);
-                        if (damage > 0)
-                        {
-                            NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
-                        }
-                        e.Damage = e.Damage + damage;
-                        return;
+                        NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
                     }
-                    if (vars.informations[index].actualClass == "paladin")
-                    {
-                        int damage = (vars.paladin[index].statRangedDamage * 3);
-                        if (damage > 0)
-                        {
-                            NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
-                        }
-                        e.Damage = e.Damage + damage;
-                        return;
-                    }
-                    if (vars.informations[index].actualClass == "wizard")
-                    {
-                        int damage = (vars.wizard[index].statRangedDamage);
-                        if (damage > 0)
-                        {
-                            NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
-                        }
-                        e.Damage = e.Damage + damage;
-                        return;
-                    }
-
+                    e.Damage = e.Damage + damage;
+                    return;
                 }
-                if (sender.SelectedItem.magic)
+                if (vars.informations[index].actualClass == "paladin")
                 {
+                    int damage = (vars.paladin[index].statRangedDamage * 3);
+                    if (damage > 0)
+                    {
+                        NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
+                    }
+                    e.Damage = e.Damage + damage;
+                    return;
+                }
+                if (vars.informations[index].actualClass == "wizard")
+                {
+                    int damage = (vars.wizard[index].statRangedDamage);
+                    if (damage > 0)
+                    {
+                        NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
+                    }
+                    e.Damage = e.Damage + damage;
+                    return;
+                }
 
-                    if (vars.informations[index].actualClass == "warrior")
+            }
+            if (sender.SelectedItem.magic)
+            {
+
+                if (vars.informations[index].actualClass == "warrior")
+                {
+                    int damage = (vars.warrior[index].statMagicDamage);
+                    if (damage > 0)
                     {
-                        int damage = (vars.warrior[index].statMagicDamage);
-                        if (damage > 0)
-                        {
-                            NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
-                        }
-                        e.Damage = e.Damage + damage;
-                        return;
+                        NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
                     }
-                    if (vars.informations[index].actualClass == "paladin")
+                    e.Damage = e.Damage + damage;
+                    return;
+                }
+                if (vars.informations[index].actualClass == "paladin")
+                {
+                    int damage = (vars.paladin[index].statMagicDamage);
+                    if (damage > 0)
                     {
-                        int damage = (vars.paladin[index].statMagicDamage);
-                        if (damage > 0)
-                        {
-                            NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
-                        }
-                        e.Damage = e.Damage + damage;
-                        return;
+                        NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
                     }
-                    if (vars.informations[index].actualClass == "wizard")
+                    e.Damage = e.Damage + damage;
+                    return;
+                }
+                if (vars.informations[index].actualClass == "wizard")
+                {
+                    int damage = (vars.wizard[index].statMagicDamage * 3);
+                    if (damage > 0)
                     {
-                        int damage = (vars.wizard[index].statMagicDamage * 3);
-                        if (damage > 0)
-                        {
-                            NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
-                        }
-                        e.Damage = e.Damage + damage;
-                        return;
+                        NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
                     }
+                    e.Damage = e.Damage + damage;
+                    return;
+                }
 
 
 
@@ -245,6 +247,6 @@ namespace cClass
             }
 
 
-        }
+        
     }
 }
