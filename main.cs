@@ -20,7 +20,7 @@ namespace cClass
 
         public main(Main game) : base(game) { Order -= 1; }
 
-        public override Version Version { get { return new Version("1.2"); } }
+        public override Version Version { get { return new Version("1.3"); } }
         public override string Name { get { return "cClass"; } }
         public override string Author { get { return "Teddy"; } }
         public override string Description { get { return "Classes And Levels"; } }
@@ -36,14 +36,14 @@ namespace cClass
             ServerApi.Hooks.WorldSave.Register(this, onSave);
             ServerApi.Hooks.NpcStrike.Register(this, damage.onDamage);
             ServerApi.Hooks.ServerJoin.Register(this, onJoin.start);
-            Commands.ChatCommands.Add(new Command("cclass.level", commands.levelCmd, "level"));
-            Commands.ChatCommands.Add(new Command("cclass.warrior", commands.warriorCmd, "warrior"));
-            Commands.ChatCommands.Add(new Command("cclass.paladin", commands.paladinCmd, "paladin"));
-            Commands.ChatCommands.Add(new Command("cclass.wizard", commands.wizardCmd, "wizard"));
-            Commands.ChatCommands.Add(new Command("cclass.statsadd", commands.statCmd, "statsadd"));
-            Commands.ChatCommands.Add(new Command("cclass.bpaladin", commands.bestPaladinsCmd, "bpaladin"));
-            Commands.ChatCommands.Add(new Command("cclass.bwarrior", commands.bestWarriorsCmd, "bwarrior"));
-            Commands.ChatCommands.Add(new Command("cclass.bwizard", commands.bestWizardsCmd, "bwizard"));
+            Commands.ChatCommands.Add(new Command("cclass.level", commands.levelCmd, "level") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.warrior", commands.warriorCmd, "warrior") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.paladin", commands.paladinCmd, "paladin") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.wizard", commands.wizardCmd, "wizard") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.statsadd", commands.statCmd, "statsadd") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.bpaladin", commands.bestPaladinsCmd, "bpaladin") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.bwarrior", commands.bestWarriorsCmd, "bwarrior") { AllowServer = false });
+            Commands.ChatCommands.Add(new Command("cclass.bwizard", commands.bestWizardsCmd, "bwizard") { AllowServer = false });
 
             vars.informations = Config.informations;
             vars.warrior = Config.Warrior;
