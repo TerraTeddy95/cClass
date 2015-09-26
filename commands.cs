@@ -14,6 +14,7 @@ namespace cClass
     {
         public static void bestWizardsCmd(CommandArgs e)
         {
+
             if (vars.wizard.Count > 4)
             {
                 var levels = vars.wizard.Select(c => c.level).ToList();
@@ -120,11 +121,6 @@ namespace cClass
         public static void statCmd(CommandArgs e)
         {
             int index = vars.warrior.FindIndex(w => w.player == e.Player.Name);
-            if (e.Player.Index == -1) //CHECK WHO SEND (CONSOLE OR PLAYER)
-            {
-                Console.WriteLine("[cClass] You can't use this command from console!");
-                return;
-            }
             if (e.Player.IsLoggedIn == false)
             {
                 e.Player.SendMessage("[cClass] Please login and try again!", Color.Silver);
@@ -137,10 +133,10 @@ namespace cClass
             }
             if (e.Parameters.Count == 0)
             {
-                e.Player.SendMessage("[cClass] /statsadd [hp/meeledmg/rangeddmg/magicdmg]", Color.Silver);
+                e.Player.SendMessage("[cClass] /statsadd [hp/meleedmg/rangeddmg/magicdmg]", Color.Silver);
                 return;
             }
-            if (e.Parameters[0] == "hp" || e.Parameters[0] == "meeledmg" || e.Parameters[0] == "rangeddmg" || e.Parameters[0] == "magicdmg")
+            if (e.Parameters[0] == "hp" || e.Parameters[0] == "meleedmg" || e.Parameters[0] == "rangeddmg" || e.Parameters[0] == "magicdmg")
             {
                 if (e.Parameters[0] == "magicdmg")
                 {
@@ -286,7 +282,7 @@ namespace cClass
                         }
                     }
                 }
-                if (e.Parameters[0] == "meeledmg")
+                if (e.Parameters[0] == "meleedmg")
                 {
                     if (vars.informations[index].actualClass == "wizard")
                     {
@@ -440,18 +436,13 @@ namespace cClass
             }
             else
             {
-                e.Player.SendMessage("[cClass] /statsadd [hp/meeledmg/rangeddmg/magicdmg]", Color.Silver);
+                e.Player.SendMessage("[cClass] /statsadd [hp/meleedmg/rangeddmg/magicdmg]", Color.Silver);
                 return;
             }
         }
         public static void levelCmd(CommandArgs e)
         {
             int index = vars.warrior.FindIndex(w => w.player == e.Player.Name);
-            if (e.Player.Index == -1) //CHECK WHO SEND (CONSOLE OR PLAYER)
-            {
-                Console.WriteLine("[cClass] You can't use this command from console!");
-                return;
-            }
             if (e.Player.IsLoggedIn == false)
             {
                 e.Player.SendMessage("[cClass] Please login and try again!", Color.Silver);
@@ -499,11 +490,6 @@ namespace cClass
         }
         public static void warriorCmd(CommandArgs e)
         {
-            if (e.Player.Index == -1) //CHECK WHO SEND (CONSOLE OR PLAYER)
-            {
-                Console.WriteLine("[cClass] You can't use this command from console!");
-                return;
-            }
             if (e.Player.IsLoggedIn == false)
             {
                 e.Player.SendMessage("[cClass] Please login and try again!", Color.Silver);
@@ -541,11 +527,6 @@ namespace cClass
 
         public static void paladinCmd(CommandArgs e)
         {
-            if (e.Player.Index == -1) //CHECK WHO SEND (CONSOLE OR PLAYER)
-            {
-                Console.WriteLine("[cClass] You can't use this command from console!");
-                return;
-            }
             if (e.Player.IsLoggedIn == false)
             {
                 e.Player.SendMessage("[cClass] Please login and try again!", Color.Silver);
@@ -582,11 +563,6 @@ namespace cClass
         }
         public static void wizardCmd(CommandArgs e)
         {
-            if (e.Player.Index == -1) //CHECK WHO SEND (CONSOLE OR PLAYER)
-            {
-                Console.WriteLine("[cClass] You can't use this command from console!");
-                return;
-            }
             if (e.Player.IsLoggedIn == false)
             {
                 e.Player.SendMessage("[cClass] Please login and try again!", Color.Silver);
