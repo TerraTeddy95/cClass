@@ -542,7 +542,7 @@ namespace cClass
                 e.Player.SendMessage("[cClass] You don't have settings class! Please try reconnect!", Color.Silver);
                 return;
             }
-            if(Variables.playersData[e.Player.Name].ActualClass == "warrior")
+            if (Variables.playersData[e.Player.Name].ActualClass == "warrior")
             {
                 e.Player.SendMessage("[cClass] Your actual class is already Warrior!", Color.Silver);
                 return;
