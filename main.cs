@@ -43,6 +43,7 @@ namespace cClass
             Commands.ChatCommands.Add(new Command("cclass.bwizard", Cmds.bestWizardsCmd, "bwizard") { AllowServer = false, HelpText = "Show 5 best players in Wizard class"});
             Commands.ChatCommands.Add(new Command("cclass.bpaladin", Cmds.bestPaladinsCmd, "bpaladin") { AllowServer = false, HelpText = "Show 5 best players in Paladin class" });
             Commands.ChatCommands.Add(new Command("cclass.bwarrior", Cmds.bestWarriorsCmd, "bwarrior") { AllowServer = false, HelpText = "Show 5 best players in Warrior class" });
+            Commands.ChatCommands.Add(new Command("cclass.statsadd", Cmds.statCmd, "statsadd") { AllowServer = false, HelpText = "Statictics class" });
             //Load Levels etc
             Variables.playersData = Config.playersData;
             Variables.levelUp = Config.levelUp;
