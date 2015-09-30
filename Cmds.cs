@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -494,6 +494,7 @@ namespace cClass
             Variables.playersData[e.Player.Name].ActualClass = "wizard";
             Inventory.loadBar(e.Player, "wizard");
             Inventory.loadEquipment(e.Player, "wizard");
+            e.Player.SendMessage("[cClass] Class has been changed to Wizard", Color.Silver);
             return;
         }
         public static void paladinCmd(CommandArgs e)
@@ -528,6 +529,7 @@ namespace cClass
             Variables.playersData[e.Player.Name].ActualClass = "paladin";
             Inventory.loadBar(e.Player, "paladin");
             Inventory.loadEquipment(e.Player, "paladin");
+            e.Player.SendMessage("[cClass] Class has been changed to Paladin", Color.Silver);
             return;
         }
         public static void warriorCmd(CommandArgs e)
@@ -562,6 +564,7 @@ namespace cClass
             Variables.playersData[e.Player.Name].ActualClass = "warrior";
             Inventory.loadBar(e.Player, "warrior");
             Inventory.loadEquipment(e.Player, "warrior");
+            e.Player.SendMessage("[cClass] Class has been changed to Warrior", Color.Silver);
             return;
         }
         public static void levelCmd(CommandArgs e)
