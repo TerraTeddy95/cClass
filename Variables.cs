@@ -15,10 +15,11 @@ namespace cClass
         public static string Message3 = "[cClass] You don't have enough stat points!";
         public static string levelUp = "[%level%] Level Up!";
         public static int Chance = 7;
-        public static List<int> BlockedNPCs = new List<int>() { 488, 49, 74, 46, 85, 67, 55, 230, 63, 64, 101, 242, 256, 58, 65, 21, 1 };
         public static string levelCommand = "[%level%] %exp%/%neededexp% %percent%";
         public static string startClass = "warrior";
+        public static Dictionary<int, bool> blockedNPCs = new Dictionary<int, bool>();
         public static Dictionary<string, Variables.informations> playersData = new Dictionary<string, Variables.informations>();
+        
         public class informations
         {
             public string ActualClass = "warrior";

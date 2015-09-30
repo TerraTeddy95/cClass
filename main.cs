@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,7 +48,7 @@ namespace cClass
             Variables.playersData = Config.playersData;
             Variables.levelUp = Config.levelUp;
             Variables.levelCommand = Config.levelCommand;
-            Variables.BlockedNPCs = Config.BlockedNPCs;
+            Variables.blockedNPCs = Config.blockedNPCs;
             Variables.Chance = Config.Chance;
             Variables.startClass = Config.startClass;
             Variables.Message1 = Config.Message1;
@@ -60,9 +60,8 @@ namespace cClass
         {
             TSPlayer.All.SendMessage("[cClass] Saving player statistics.. Possible lags!", Color.Silver);
             string path = Path.Combine(TShock.SavePath, "cClassData1_4.json");
-            Config.BlockedNPCs = Variables.BlockedNPCs.ToList();
+            Config.blockedNPCs = Variables.blockedNPCs;
             
-           
             Config.Write(path);
             TSPlayer.All.SendMessage("[cClass] Saved statistics!", Color.Silver);
         }

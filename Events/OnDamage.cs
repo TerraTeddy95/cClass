@@ -24,9 +24,13 @@ namespace cClass.Events
             {
                 return;
             }
-            if (Variables.BlockedNPCs.Contains(e.Npc.netID))
+            if (Variables.blockedNPCs.ContainsKey(e.Npc.netID))
             {
-                return;
+                if (Variables.blockedNPCs[e.Npc.netID] == true)
+                {
+                    return;
+                }
+                
             }
             Color c = new Color(255, 120, 0);
 
