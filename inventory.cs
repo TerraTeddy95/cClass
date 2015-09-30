@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Terraria;
@@ -8,458 +7,271 @@ using TerrariaApi.Server;
 using Newtonsoft.Json;
 using System.IO;
 
-
 namespace cClass
 {
-    class inventory
+    class Inventory
     {
-        public static void clearInventory(TSPlayer p)
+        public static bool clearEquipment(TSPlayer Player)
+        {
+            Player.TPlayer.armor[0].netDefaults(0);
+            Player.TPlayer.armor[1].netDefaults(0);
+            Player.TPlayer.armor[2].netDefaults(0);
+            Player.TPlayer.armor[3].netDefaults(0);
+            Player.TPlayer.armor[4].netDefaults(0);
+            Player.TPlayer.armor[5].netDefaults(0);
+            Player.TPlayer.armor[6].netDefaults(0);
+            Player.TPlayer.armor[7].netDefaults(0);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)59);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)60);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)61);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)62);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)63);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)64);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)65);
+            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)66);
+            return true;
+        }
+        public static bool clearBar(TSPlayer Player)
+        {
+            Player.TPlayer.inventory[0].SetDefaults(0);
+            Player.TPlayer.inventory[1].SetDefaults(0);
+            Player.TPlayer.inventory[2].SetDefaults(0);
+            Player.TPlayer.inventory[3].SetDefaults(0);
+            Player.TPlayer.inventory[4].SetDefaults(0);
+            Player.TPlayer.inventory[5].SetDefaults(0);
+            Player.TPlayer.inventory[6].SetDefaults(0);
+            Player.TPlayer.inventory[7].SetDefaults(0);
+            Player.TPlayer.inventory[8].SetDefaults(0);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)0);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)1);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)2);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)3);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)4);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)5);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)6);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)7);
+            NetMessage.SendData(5, -1, -1, "", Player.Index, (float)8);
+            return true;
+        }
+        public static bool loadEquipment(TSPlayer Player, string classe)
         {
             int currentLoop = 0;
-            while (currentLoop < 59)
+            if (classe == "warrior")
             {
-                p.TPlayer.inventory[currentLoop].SetDefaults(0);
-                NetMessage.SendData(5, -1, -1, "", p.Index, (float)currentLoop, 0f, 0f, 0);
-                currentLoop++;
-            }
-        }
-
-        public static bool saveEquipment(int index, string classe)
-        {
-
-            string pName = vars.warrior[index].player;
-
-            foreach (TSPlayer n in TShock.Players)
-            {
-                if (n.Name == pName)
+                if (Variables.playersData[Player.Name].Warrior.itemsArmorNetID.Count > 0)
                 {
-
-                    if (classe == "warrior")
+                    foreach (int i in Variables.playersData[Player.Name].Warrior.itemsArmorNetID)
                     {
-                        TSPlayer p = n;
-                        if (vars.warrior[index].itemsArmorNetID.Count > 0)
-                        {
-                            vars.warrior[index].itemsArmorNetID.Clear();
-                            vars.warrior[index].itemsArmorPrefix.Clear();
-                            vars.warrior[index].itemsArmorStack.Clear();
-                            vars.warrior[index].itemsBarName.Clear();
-                        }
-
-                        int currentLoop = 0;
-                        foreach (Item i in p.TPlayer.armor)
-                        {
-
-                            vars.warrior[index].itemsArmorNetID.Add(i.netID);
-                            vars.warrior[index].itemsArmorPrefix.Add(i.prefix);
-                            vars.warrior[index].itemsArmorStack.Add(i.stack);
-                            currentLoop++;
-                            if (currentLoop == 9)
-                            {
-                                return true;
-                            }
-                        }
+                        Player.TPlayer.armor[currentLoop].netDefaults(i);
+                        NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)currentLoop + 59, (float)Variables.playersData[Player.Name].Warrior.itemsArmorPrefix[currentLoop], 0f, 0);
+                        currentLoop++;
                     }
-                    if (classe == "paladin")
-                    {
-                        TSPlayer p = n;
-                        if (vars.paladin[index].itemsArmorNetID.Count > 0)
-                        {
-                            vars.paladin[index].itemsArmorNetID.Clear();
-                            vars.paladin[index].itemsArmorPrefix.Clear();
-                            vars.paladin[index].itemsArmorStack.Clear();
-                            vars.paladin[index].itemsBarName.Clear();
-                        }
-
-                        int currentLoop = 0;
-                        foreach (Item i in p.TPlayer.armor)
-                        {
-
-
-                            vars.paladin[index].itemsArmorNetID.Add(i.netID);
-                            vars.paladin[index].itemsArmorPrefix.Add(i.prefix);
-                            vars.paladin[index].itemsArmorStack.Add(i.stack);
-                            currentLoop++;
-                            if (currentLoop == 9)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    if (classe == "wizard")
-                    {
-                        TSPlayer p = n;
-                        if (vars.wizard[index].itemsArmorNetID.Count > 0)
-                        {
-                            vars.wizard[index].itemsArmorNetID.Clear();
-                            vars.wizard[index].itemsArmorPrefix.Clear();
-                            vars.wizard[index].itemsArmorStack.Clear();
-                            vars.wizard[index].itemsBarName.Clear();
-                        }
-
-                        int currentLoop = 0;
-                        foreach (Item i in p.TPlayer.armor)
-                        {
-                            vars.wizard[index].itemsArmorNetID.Add(i.netID);
-                            vars.wizard[index].itemsArmorPrefix.Add(i.prefix);
-                            vars.wizard[index].itemsArmorStack.Add(i.stack);
-                            currentLoop++;
-                            if (currentLoop == 9)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
-
+                    return true;
+                }
+                else
+                {
+                    clearEquipment(Player);
                 }
             }
-            return false;
-            
-            
-            
-
-
-
-
-
-
-
-            return false;
-        }
-        public static bool saveBar(int index, string classe)
-        {
-            string pName = vars.warrior[index].player;
-
-            foreach (TSPlayer n in TShock.Players)
+            if (classe == "paladin")
             {
-                if (n.Name == pName)
+                if (Variables.playersData[Player.Name].Paladin.itemsArmorNetID.Count > 0)
                 {
-                    TSPlayer p = n;
-                    if (classe == "warrior")
+                    foreach (int i in Variables.playersData[Player.Name].Paladin.itemsArmorNetID)
                     {
-                        int currentLoop = 0;
-                        if (vars.warrior[index].itemsBarNetID.Count > 0)
-                        {
-                            vars.warrior[index].itemsBarNetID.Clear();
-                            vars.warrior[index].itemsBarPrefix.Clear();
-                            vars.warrior[index].itemsBarStack.Clear();
-                            vars.warrior[index].itemsBarName.Clear();
-                        }
-                        foreach (Item i in p.TPlayer.inventory)
-                        {
-
-                            vars.warrior[index].itemsBarNetID.Add(i.netID);
-                            vars.warrior[index].itemsBarPrefix.Add(i.prefix);
-                            vars.warrior[index].itemsBarStack.Add(i.stack);
-                            vars.warrior[index].itemsBarName.Add(i.name);
-
-                            currentLoop++;
-                            if (currentLoop == 10)
-                            {
-                                return true;
-                            }
-                        }
+                        Player.TPlayer.armor[currentLoop].netDefaults(i);
+                        NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)currentLoop + 59, (float)Variables.playersData[Player.Name].Paladin.itemsArmorPrefix[currentLoop], 0f, 0);
+                        currentLoop++;
                     }
-                    if (classe == "paladin")
-                    {
-                        int currentLoop = 0;
-                        if (vars.paladin[index].itemsBarNetID.Count > 0)
-                        {
-                            vars.paladin[index].itemsBarNetID.Clear();
-                            vars.paladin[index].itemsBarPrefix.Clear();
-                            vars.paladin[index].itemsBarStack.Clear();
-                            vars.paladin[index].itemsBarName.Clear();
-                        }
-                        foreach (Item i in p.TPlayer.inventory)
-                        {
-
-                            vars.paladin[index].itemsBarNetID.Add(i.netID);
-                            vars.paladin[index].itemsBarPrefix.Add(i.prefix);
-                            vars.paladin[index].itemsBarStack.Add(i.stack);
-                            vars.paladin[index].itemsBarName.Add(i.name);
-
-                            currentLoop++;
-                            if (currentLoop == 10)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    if (classe == "wizard")
-                    {
-                        int currentLoop = 0;
-                        if (vars.wizard[index].itemsBarNetID.Count > 0)
-                        {
-                            vars.wizard[index].itemsBarNetID.Clear();
-                            vars.wizard[index].itemsBarPrefix.Clear();
-                            vars.wizard[index].itemsBarStack.Clear();
-                            vars.wizard[index].itemsBarName.Clear();
-                        }
-                        foreach (Item i in p.TPlayer.inventory)
-                        {
-
-                            vars.wizard[index].itemsBarNetID.Add(i.netID);
-                            vars.wizard[index].itemsBarPrefix.Add(i.prefix);
-                            vars.wizard[index].itemsBarStack.Add(i.stack);
-                            vars.wizard[index].itemsBarName.Add(i.name);
-
-                            currentLoop++;
-                            if (currentLoop == 10)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
+                    return true;
+                }
+                else
+                {
+                    clearEquipment(Player);
                 }
             }
-
-            return false;
-        }
-
-        public static bool loadBar(int index, string classe)
-        {
-            string pName = vars.warrior[index].player;
-
-            foreach (TSPlayer n in TShock.Players)
+            if (classe == "wizard")
             {
-                if (n.Name == pName)
+                if (Variables.playersData[Player.Name].Wizard.itemsArmorNetID.Count > 0)
                 {
-                    TSPlayer p = n;
-                    if (classe == "warrior")
+                    foreach (int i in Variables.playersData[Player.Name].Wizard.itemsArmorNetID)
                     {
-                        int currentLoop = 0;
-                        if (vars.warrior[index].itemsBarNetID.Count > 0)
-                        {
-                            foreach (int i in vars.warrior[index].itemsBarNetID)
-                            {
-                                p.TPlayer.inventory[currentLoop].SetDefaults(i);
-                                p.TPlayer.inventory[currentLoop].stack = vars.warrior[index].itemsBarStack[currentLoop];
-                                p.TPlayer.inventory[currentLoop].name = vars.warrior[index].itemsBarName[currentLoop];
-                                NetMessage.SendData(5, -1, -1, "", p.Index, (float)currentLoop, (float)vars.warrior[index].itemsBarPrefix[currentLoop], 0f, 0);
-                                currentLoop++;
-                            }
-                            return true;
-                        }
-                        else
-                        {
-                            p.TPlayer.inventory[0].SetDefaults(0);
-                            p.TPlayer.inventory[1].SetDefaults(0);
-                            p.TPlayer.inventory[2].SetDefaults(0);
-                            p.TPlayer.inventory[3].SetDefaults(0);
-                            p.TPlayer.inventory[4].SetDefaults(0);
-                            p.TPlayer.inventory[5].SetDefaults(0);
-                            p.TPlayer.inventory[6].SetDefaults(0);
-                            p.TPlayer.inventory[7].SetDefaults(0);
-                            p.TPlayer.inventory[8].SetDefaults(0);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)0);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)1);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)2);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)3);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)4);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)5);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)6);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)7);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)8);
-                            return true;
-
-                        }
+                        Player.TPlayer.armor[currentLoop].netDefaults(i);
+                        NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", Player.Index, (float)currentLoop + 59, (float)Variables.playersData[Player.Name].Wizard.itemsArmorPrefix[currentLoop], 0f, 0);
+                        currentLoop++;
                     }
-                    if (classe == "paladin")
-                    {
-                        int currentLoop = 0;
-                        if (vars.paladin[index].itemsBarNetID.Count > 0)
-                        {
-                            foreach (int i in vars.paladin[index].itemsBarNetID)
-                            {
-                                p.TPlayer.inventory[currentLoop].SetDefaults(i);
-                                p.TPlayer.inventory[currentLoop].stack = vars.paladin[index].itemsBarStack[currentLoop];
-                                p.TPlayer.inventory[currentLoop].name = vars.paladin[index].itemsBarName[currentLoop];
-                                NetMessage.SendData(5, -1, -1, "", p.Index, (float)currentLoop, (float)vars.paladin[index].itemsBarPrefix[currentLoop], 0f, 0);
-                                currentLoop++;
-                            }
-                            return true;
-                        }
-                        else
-                        {
-                            p.TPlayer.inventory[0].SetDefaults(0);
-                            p.TPlayer.inventory[1].SetDefaults(0);
-                            p.TPlayer.inventory[2].SetDefaults(0);
-                            p.TPlayer.inventory[3].SetDefaults(0);
-                            p.TPlayer.inventory[4].SetDefaults(0);
-                            p.TPlayer.inventory[5].SetDefaults(0);
-                            p.TPlayer.inventory[6].SetDefaults(0);
-                            p.TPlayer.inventory[7].SetDefaults(0);
-                            p.TPlayer.inventory[8].SetDefaults(0);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)0);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)1);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)2);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)3);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)4);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)5);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)6);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)7);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)8);
-                            return true;
-
-                        }
-                    }
-                    if (classe == "wizard")
-                    {
-                        int currentLoop = 0;
-                        if (vars.wizard[index].itemsBarNetID.Count > 0)
-                        {
-                            foreach (int i in vars.wizard[index].itemsBarNetID)
-                            {
-                                p.TPlayer.inventory[currentLoop].SetDefaults(i);
-                                p.TPlayer.inventory[currentLoop].stack = vars.wizard[index].itemsBarStack[currentLoop];
-                                p.TPlayer.inventory[currentLoop].name = vars.wizard[index].itemsBarName[currentLoop];
-                                NetMessage.SendData(5, -1, -1, "", p.Index, (float)currentLoop, (float)vars.wizard[index].itemsBarPrefix[currentLoop], 0f, 0);
-                                currentLoop++;
-                            }
-                            return true;
-                        }
-                        else
-                        {
-                            p.TPlayer.inventory[0].SetDefaults(0);
-                            p.TPlayer.inventory[1].SetDefaults(0);
-                            p.TPlayer.inventory[2].SetDefaults(0);
-                            p.TPlayer.inventory[3].SetDefaults(0);
-                            p.TPlayer.inventory[4].SetDefaults(0);
-                            p.TPlayer.inventory[5].SetDefaults(0);
-                            p.TPlayer.inventory[6].SetDefaults(0);
-                            p.TPlayer.inventory[7].SetDefaults(0);
-                            p.TPlayer.inventory[8].SetDefaults(0);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)0);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)1);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)2);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)3);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)4);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)5);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)6);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)7);
-                            NetMessage.SendData(5, -1, -1, "", p.Index, (float)8);
-                            return true;
-
-                        }
-                    }
-                    return false;
+                    return true;
+                }
+                else
+                {
+                    clearEquipment(Player);
                 }
             }
             return false;
         }
-
-        public static bool loadEquipment(int index, string classe)
+        public static bool loadBar(TSPlayer Player, string classe)
         {
-            string pName = vars.warrior[index].player;
-
-            foreach (TSPlayer n in TShock.Players)
+            int currentLoop = 0;
+            if (classe == "warrior")
             {
-                if (n.Name == pName)
+                if (Variables.playersData[Player.Name].Warrior.itemsBarNetID.Count > 0)
                 {
-                    TSPlayer p = n;
-                    if (classe == "warrior")
+                    foreach (int i in Variables.playersData[Player.Name].Warrior.itemsBarNetID)
                     {
-                        int currentLoop = 0;
-                        if (vars.warrior[index].itemsArmorNetID.Count > 0)
-                        {
-                            foreach (int i in vars.warrior[index].itemsArmorNetID)
-                            {
-
-                                p.TPlayer.armor[currentLoop].netDefaults(i);
-                                p.TPlayer.armor[currentLoop].stack = vars.warrior[index].itemsArmorStack[currentLoop];
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59, (float)vars.warrior[index].itemsArmorPrefix[currentLoop], 0f, 0);
-                                currentLoop++;
-                            }
-                            return true;
-                        }
-                        else
-                        {
-                            p.TPlayer.armor[0].netDefaults(0);
-                            p.TPlayer.armor[1].netDefaults(0);
-                            p.TPlayer.armor[2].netDefaults(0);
-                            p.TPlayer.armor[3].netDefaults(0);
-                            p.TPlayer.armor[4].netDefaults(0);
-                            p.TPlayer.armor[5].netDefaults(0);
-                            p.TPlayer.armor[6].netDefaults(0);
-                            p.TPlayer.armor[7].netDefaults(0);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)59);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)60);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)61);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)62);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)63);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)64);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)65);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)66);
-                        }
+                        Player.TPlayer.inventory[currentLoop].SetDefaults(i);
+                        Player.TPlayer.inventory[currentLoop].stack = Variables.playersData[Player.Name].Warrior.itemsBarStack[currentLoop];
+                        NetMessage.SendData(5, -1, -1, "", Player.Index, (float)currentLoop, (float)Variables.playersData[Player.Name].Warrior.itemsBarStack[currentLoop], 0f, 0);
+                        currentLoop++;
                     }
-                    if (classe == "paladin")
+                    return true;
+                }
+                else
+                {
+                    clearBar(Player);
+                    return true;
+                }
+            }
+            if (classe == "paladin")
+            {
+                if (Variables.playersData[Player.Name].Paladin.itemsBarNetID.Count > 0)
+                {
+                    foreach (int i in Variables.playersData[Player.Name].Paladin.itemsBarNetID)
                     {
-                        int currentLoop = 0;
-                        if (vars.paladin[index].itemsArmorNetID.Count > 0)
-                        {
-                            foreach (int i in vars.paladin[index].itemsArmorNetID)
-                            {
-                                p.TPlayer.armor[currentLoop].netDefaults(i);
-                                p.TPlayer.armor[currentLoop].stack = vars.paladin[index].itemsArmorStack[currentLoop];
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)currentLoop + 59, (float)vars.paladin[index].itemsArmorPrefix[currentLoop], 0f, 0);
-                                currentLoop++;
-                            }
-                        }
-                        else
-                        {
-                            p.TPlayer.armor[0].netDefaults(0);
-                            p.TPlayer.armor[1].netDefaults(0);
-                            p.TPlayer.armor[2].netDefaults(0);
-                            p.TPlayer.armor[3].netDefaults(0);
-                            p.TPlayer.armor[4].netDefaults(0);
-                            p.TPlayer.armor[5].netDefaults(0);
-                            p.TPlayer.armor[6].netDefaults(0);
-                            p.TPlayer.armor[7].netDefaults(0);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)59);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)60);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)61);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)62);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)63);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)64);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)65);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)66);
-                        }
+                        Player.TPlayer.inventory[currentLoop].SetDefaults(i);
+                        Player.TPlayer.inventory[currentLoop].stack = Variables.playersData[Player.Name].Paladin.itemsBarStack[currentLoop];
+                        NetMessage.SendData(5, -1, -1, "", Player.Index, (float)currentLoop, (float)Variables.playersData[Player.Name].Paladin.itemsBarStack[currentLoop], 0f, 0);
+                        currentLoop++;
+                    }
+                    return true;
+                }
+                else
+                {
+                    clearBar(Player);
+                    return true;
+                }
+            }
+            if (classe == "wizard")
+            {
+                if (Variables.playersData[Player.Name].Wizard.itemsBarNetID.Count > 0)
+                {
+                    foreach (int i in Variables.playersData[Player.Name].Wizard.itemsBarNetID)
+                    {
+                        Player.TPlayer.inventory[currentLoop].SetDefaults(i);
+                        Player.TPlayer.inventory[currentLoop].stack = Variables.playersData[Player.Name].Wizard.itemsBarStack[currentLoop];
+                        NetMessage.SendData(5, -1, -1, "", Player.Index, (float)currentLoop, (float)Variables.playersData[Player.Name].Wizard.itemsBarStack[currentLoop], 0f, 0);
+                        currentLoop++;
+                    }
+                    return true;
+                }
+                else
+                {
+                    clearBar(Player);
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool saveBar(TSPlayer Player, string classe)
+        {
+            int currentLoop = 0;
+            if (classe == "warrior")
+            {
+                Variables.playersData[Player.Name].Warrior.itemsBarNetID.Clear();
+                Variables.playersData[Player.Name].Warrior.itemsBarPrefix.Clear();
+                Variables.playersData[Player.Name].Warrior.itemsBarStack.Clear();
+                foreach (Item i in Player.TPlayer.inventory)
+                {
+                    currentLoop++;
+                    Variables.playersData[Player.Name].Warrior.itemsBarNetID.Add(i.netID);
+                    Variables.playersData[Player.Name].Warrior.itemsBarPrefix.Add(i.prefix);
+                    Variables.playersData[Player.Name].Warrior.itemsBarStack.Add(i.stack);
+                    if (currentLoop == 10)
+                    {
                         return true;
                     }
-                    if (classe == "wizard")
+                }
+            }
+            if (classe == "paladin")
+            {
+                Variables.playersData[Player.Name].Paladin.itemsBarNetID.Clear();
+                Variables.playersData[Player.Name].Paladin.itemsBarPrefix.Clear();
+                Variables.playersData[Player.Name].Paladin.itemsBarStack.Clear();
+                foreach (Item i in Player.TPlayer.inventory)
+                {
+                    currentLoop++;
+                    Variables.playersData[Player.Name].Paladin.itemsBarNetID.Add(i.netID);
+                    Variables.playersData[Player.Name].Paladin.itemsBarPrefix.Add(i.prefix);
+                    Variables.playersData[Player.Name].Paladin.itemsBarStack.Add(i.stack);
+                    if (currentLoop == 10)
                     {
-                        int currentLoop = 0;
-                        if (vars.wizard[index].itemsArmorNetID.Count > 0)
-                        {
-                            foreach (int i in vars.wizard[index].itemsArmorNetID)
-                            {
-                                p.TPlayer.armor[currentLoop].netDefaults(i);
-                                p.TPlayer.armor[currentLoop].stack = vars.wizard[index].itemsArmorStack[currentLoop];
-                                NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)(currentLoop + 59), (float)vars.wizard[index].itemsArmorPrefix[currentLoop], 0f, 0);
-                                
-                                currentLoop++;
-                            }
-                        }
-                        else
-                        {
-                            p.TPlayer.armor[0].netDefaults(0);
-                            p.TPlayer.armor[1].netDefaults(0);
-                            p.TPlayer.armor[2].netDefaults(0);
-                            p.TPlayer.armor[3].netDefaults(0);
-                            p.TPlayer.armor[4].netDefaults(0);
-                            p.TPlayer.armor[5].netDefaults(0);
-                            p.TPlayer.armor[6].netDefaults(0);
-                            p.TPlayer.armor[7].netDefaults(0);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)59);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)60);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)61);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)62);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)63);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)64);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)65);
-                            NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, "", p.Index, (float)66);
-                        }
+                        return true;
+                    }
+                }
+            }
+            if (classe == "wizard")
+            {
+                Variables.playersData[Player.Name].Wizard.itemsBarNetID.Clear();
+                Variables.playersData[Player.Name].Wizard.itemsBarPrefix.Clear();
+                Variables.playersData[Player.Name].Wizard.itemsBarStack.Clear();
+                foreach (Item i in Player.TPlayer.inventory)
+                {
+                    currentLoop++;
+                    Variables.playersData[Player.Name].Wizard.itemsBarNetID.Add(i.netID);
+                    Variables.playersData[Player.Name].Wizard.itemsBarPrefix.Add(i.prefix);
+                    Variables.playersData[Player.Name].Wizard.itemsBarStack.Add(i.stack);
+                    if (currentLoop == 10)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        public static bool saveEquipment(TSPlayer Player, string classe)
+        {
+            int currentLoop = 0;
+            if (classe == "warrior")
+            {
+                Variables.playersData[Player.Name].Warrior.itemsArmorNetID.Clear();
+                Variables.playersData[Player.Name].Warrior.itemsArmorPrefix.Clear();
+                foreach (Item i in Player.TPlayer.armor)
+                {
+                    currentLoop++;
+                    Variables.playersData[Player.Name].Warrior.itemsArmorNetID.Add(i.netID);
+                    Variables.playersData[Player.Name].Warrior.itemsArmorPrefix.Add(i.prefix);
+                    if (currentLoop == 8)
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (classe == "paladin")
+            {
+                Variables.playersData[Player.Name].Paladin.itemsArmorNetID.Clear();
+                Variables.playersData[Player.Name].Paladin.itemsArmorPrefix.Clear();
+                foreach (Item i in Player.TPlayer.armor)
+                {
+                    currentLoop++;
+                    Variables.playersData[Player.Name].Paladin.itemsArmorNetID.Add(i.netID);
+                    Variables.playersData[Player.Name].Paladin.itemsArmorPrefix.Add(i.prefix);
+                    if (currentLoop == 8)
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (classe == "wizard")
+            {
+                Variables.playersData[Player.Name].Wizard.itemsArmorNetID.Clear();
+                Variables.playersData[Player.Name].Wizard.itemsArmorPrefix.Clear();
+                foreach (Item i in Player.TPlayer.armor)
+                {
+                    currentLoop++;
+                    Variables.playersData[Player.Name].Wizard.itemsArmorNetID.Add(i.netID);
+                    Variables.playersData[Player.Name].Wizard.itemsArmorPrefix.Add(i.prefix);
+                    if (currentLoop == 8)
+                    {
                         return true;
                     }
                 }

@@ -8,13 +8,15 @@ namespace cClass
 {
     public class Config
     {
-
-
-        public List<vars.Warrior> Warrior = new List<vars.Warrior>();
-        public List<vars.Paladin> Paladin = new List<vars.Paladin>();
-        public List<vars.Wizard> Wizard = new List<vars.Wizard>();
-        public List<vars.playerInformation> informations = new List<vars.playerInformation>();
-
+        public string Message1 = "[cClass] Your skill has been upgraded!";
+        public string Message2 = "[cClass] You can't develop this skill more!";
+        public string Message3 = "[cClass] You don't have enough stat points!";
+        public string levelUp = "[%level%] Level Up!";
+        public int Chance = 7;
+        public List<int> BlockedNPCs = new List<int>() {488, 49, 74, 46, 85, 67, 55, 230, 63, 64, 101, 242, 256, 58, 65, 21, 1};
+        public string levelCommand = "[%level%] %exp%/%neededexp% %percent%";
+        public string startClass = "warrior";
+        public Dictionary<string, Variables.informations> playersData = new Dictionary<string, Variables.informations>();
         public void Write(string path)
         {
             File.WriteAllText(path, JsonConvert.SerializeObject(this, Formatting.Indented));
