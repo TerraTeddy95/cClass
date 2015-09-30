@@ -60,7 +60,9 @@ namespace cClass
         {
             TSPlayer.All.SendMessage("[cClass] Saving player statistics.. Possible lags!", Color.Silver);
             string path = Path.Combine(TShock.SavePath, "cClassData1_4.json");
-            Config.playersData = Variables.playersData;
+            Config.BlockedNPCs = Variables.BlockedNPCs.ToList();
+            
+           
             Config.Write(path);
             TSPlayer.All.SendMessage("[cClass] Saved statistics!", Color.Silver);
         }
