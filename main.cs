@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,11 +36,11 @@ namespace cClass
             ServerApi.Hooks.ServerJoin.Register(this, Events.OnJoin.run);
             ServerApi.Hooks.WorldSave.Register(this, onSave);
             //Commands
-            Commands.ChatCommands.Add(new Command("cclass.level", Cmds.levelCmd, "level") { AllowServer = false, HelpText = "Check level"});
+            Commands.ChatCommands.Add(new Command("cclass.level", Cmds.levelCmd, "level") { AllowServer = false, HelpText = "Check level" });
             Commands.ChatCommands.Add(new Command("cclass.warrior", Cmds.warriorCmd, "warrior") { AllowServer = false, HelpText = "Change your class to Warrior" });
             Commands.ChatCommands.Add(new Command("cclass.paladin", Cmds.paladinCmd, "paladin") { AllowServer = false, HelpText = "Change your class to Paladin" });
             Commands.ChatCommands.Add(new Command("cclass.wizard", Cmds.wizardCmd, "wizard") { AllowServer = false, HelpText = "Change your class to Wizard" });
-            Commands.ChatCommands.Add(new Command("cclass.bwizard", Cmds.bestWizardsCmd, "bwizard") { AllowServer = false, HelpText = "Show 5 best players in Wizard class"});
+            Commands.ChatCommands.Add(new Command("cclass.bwizard", Cmds.bestWizardsCmd, "bwizard") { AllowServer = false, HelpText = "Show 5 best players in Wizard class" });
             Commands.ChatCommands.Add(new Command("cclass.bpaladin", Cmds.bestPaladinsCmd, "bpaladin") { AllowServer = false, HelpText = "Show 5 best players in Paladin class" });
             Commands.ChatCommands.Add(new Command("cclass.bwarrior", Cmds.bestWarriorsCmd, "bwarrior") { AllowServer = false, HelpText = "Show 5 best players in Warrior class" });
             Commands.ChatCommands.Add(new Command("cclass.statsadd", Cmds.statCmd, "statsadd") { AllowServer = false, HelpText = "Statictics class" });
@@ -51,6 +51,9 @@ namespace cClass
             Variables.BlockedNPCs = Config.BlockedNPCs;
             Variables.Chance = Config.Chance;
             Variables.startClass = Config.startClass;
+            Variables.Message1 = Config.Message1;
+            Variables.Message2 = Config.Message2;
+            Variables.Message3 = Config.Message3;
         }
 
         public void onSave(WorldSaveEventArgs e)
