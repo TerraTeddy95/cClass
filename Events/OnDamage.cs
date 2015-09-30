@@ -153,7 +153,7 @@ namespace cClass.Events
                     {
                         return;
                     }
-                    int Damage = (Variables.playersData[e.Player.name].Warrior.statMeleeDamage);
+                    int Damage = (Variables.playersData[e.Player.name].Warrior.statRangedDamage);
                     if (Damage > 0)
                     {
                         NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + Damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
@@ -167,7 +167,7 @@ namespace cClass.Events
                     {
                         return;
                     }
-                    int Damage = (Variables.playersData[e.Player.name].Paladin.statMeleeDamage * 3);
+                    int Damage = (Variables.playersData[e.Player.name].Paladin.statRangedDamage * 3);
                     if (Damage > 0)
                     {
                         NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + Damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
@@ -181,7 +181,7 @@ namespace cClass.Events
                     {
                         return;
                     }
-                    int Damage = (Variables.playersData[e.Player.name].Wizard.statMeleeDamage);
+                    int Damage = (Variables.playersData[e.Player.name].Wizard.statRangedDamage);
                     if (Damage > 0)
                     {
                         NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + Damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
@@ -198,7 +198,7 @@ namespace cClass.Events
                     {
                         return;
                     }
-                    int Damage = (Variables.playersData[e.Player.name].Warrior.statMeleeDamage);
+                    int Damage = (Variables.playersData[e.Player.name].Warrior.statMagicDamage);
                     if (Damage > 0)
                     {
                         NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + Damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
@@ -212,7 +212,7 @@ namespace cClass.Events
                     {
                         return;
                     }
-                    int Damage = (Variables.playersData[e.Player.name].Paladin.statMeleeDamage);
+                    int Damage = (Variables.playersData[e.Player.name].Paladin.statMagicDamage);
                     if (Damage > 0)
                     {
                         NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + Damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);
@@ -220,13 +220,14 @@ namespace cClass.Events
                     e.Damage = e.Damage + Damage;
                     return;
                 }
+                
                 if (Variables.playersData[e.Player.name].ActualClass == "wizard")
                 {
                     if (e.Damage >= e.Npc.life)
                     {
                         return;
                     }
-                    int Damage = (Variables.playersData[e.Player.name].Wizard.statMeleeDamage * 3);
+                    int Damage = (Variables.playersData[e.Player.name].Wizard.statMagicDamage * 3);
                     if (Damage > 0)
                     {
                         NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, "+" + Damage, (int)c.PackedValue, e.Npc.position.X, e.Npc.position.Y, 0, 0, 0, 0);

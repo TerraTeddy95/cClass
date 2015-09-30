@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -582,28 +582,34 @@ namespace cClass
             Color c = new Color(255, 120, 0);
             if (Variables.playersData[e.Player.Name].ActualClass == "warrior")
             {
+                int neededExpForLevelUp = Variables.playersData[e.Player.Name].Warrior.level * (896 + (896 * 43 / 100));
+                int percent = (Variables.playersData[e.Player.Name].Warrior.exprience * 100) / neededExpForLevelUp;
                 string message = Variables.levelCommand.Replace("%level%", Variables.playersData[e.Player.Name].Warrior.level + "");
                 message = message.Replace("%exp%", Variables.playersData[e.Player.Name].Warrior.exprience + "");
                 message = message.Replace("%neededexp%", Variables.playersData[e.Player.Name].Warrior.level * (896 + (896 * 43 / 100)) + "");
-                message = message.Replace("%percent%", ((Variables.playersData[e.Player.Name].Warrior.exprience * 100) / Variables.playersData[e.Player.Name].Warrior.level * (896 + (896 * 43 / 100))) + "%");
+                message = message.Replace("%percent%", percent + "%");
                 NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, message, (int)c.PackedValue, e.Player.X, e.Player.Y, 0, 0, 0, 0);
                 return;
             }
             if (Variables.playersData[e.Player.Name].ActualClass == "paladin")
             {
+                int neededExpForLevelUp = Variables.playersData[e.Player.Name].Paladin.level * (896 + (896 * 43 / 100));
+                int percent = (Variables.playersData[e.Player.Name].Paladin.exprience * 100) / neededExpForLevelUp;
                 string message = Variables.levelCommand.Replace("%level%", Variables.playersData[e.Player.Name].Paladin.level + "");
                 message = message.Replace("%exp%", Variables.playersData[e.Player.Name].Paladin.exprience + "");
                 message = message.Replace("%neededexp%", Variables.playersData[e.Player.Name].Paladin.level * (896 + (896 * 43 / 100)) + "");
-                message = message.Replace("%percent%", ((Variables.playersData[e.Player.Name].Paladin.exprience * 100) / Variables.playersData[e.Player.Name].Paladin.level * (896 + (896 * 43 / 100))) + "%");
+                message = message.Replace("%percent%", percent + "%");
                 NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, message, (int)c.PackedValue, e.Player.X, e.Player.Y, 0, 0, 0, 0);
                 return;
             }
             if (Variables.playersData[e.Player.Name].ActualClass == "wizard")
             {
+                int neededExpForLevelUp = Variables.playersData[e.Player.Name].Wizard.level * (896 + (896 * 43 / 100));
+                int percent = (Variables.playersData[e.Player.Name].Wizard.exprience * 100) / neededExpForLevelUp;
                 string message = Variables.levelCommand.Replace("%level%", Variables.playersData[e.Player.Name].Wizard.level + "");
                 message = message.Replace("%exp%", Variables.playersData[e.Player.Name].Wizard.exprience + "");
                 message = message.Replace("%neededexp%", Variables.playersData[e.Player.Name].Wizard.level * (896 + (896 * 43 / 100)) + "");
-                message = message.Replace("%percent%", ((Variables.playersData[e.Player.Name].Wizard.exprience * 100) / Variables.playersData[e.Player.Name].Wizard.level * (896 + (896 * 43 / 100))) + "%");
+                message = message.Replace("%percent%", percent + "%");
                 NetMessage.SendData((int)PacketTypes.CreateCombatText, -1, -1, message, (int)c.PackedValue, e.Player.X, e.Player.Y, 0, 0, 0, 0);
                 return;
             }
